@@ -124,7 +124,7 @@ const renderDirectory = async dir => {
 
       details.date = {
         accessed: fileStats.atime,
-        modified: fileStats.mtime
+        modified: fileStats.mtime,
         changed: fileStats.ctime,
         created: fileStats.birthtime
       }
