@@ -9,7 +9,7 @@ import {StringDecoder} from 'string_decoder'
 import micro, {send} from 'micro'
 import {red, green} from 'chalk'
 import args from 'args'
-import {compile} from 'handlebars'
+import nunjucks from 'nunjucks'
 import {isBinarySync as isBinary} from 'istextorbinary'
 import filesize from 'filesize'
 import mime from 'mime-types'
@@ -50,17 +50,25 @@ const isDir = async dir => {
   return false
 }
 
-const prepareView = () => {
-  let viewContent = false
-  const viewPath = path.normalize(path.join(__dirname, '/../../views/index.hbs'))
+const prepareView = (context) => {
+  return new Promise(function (resolve, reject) {
+    let viewContent
+    const viewPath = path.normalize(path.join(__dirname, '/../../views/index.njk'))
 
-  try {
-    viewContent = fs.readFileSync(viewPath, 'utf8')
-  } catch (err) {
-    throw err
-  }
+    try {
+      viewContent = fs.readFileSync(viewPath, 'utf8')
+    } catch (err) {
+      throw err
+    }
 
-  return compile(viewContent)
+    return nunjucks.renderString(viewContent, context, function (err, res) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(res);
+    });
+  });
 }
 
 let ignoredFiles = [
@@ -129,8 +137,6 @@ const renderDirectory = async dir => {
     })
   }
 
-  const render = prepareView()
-
   const paths = []
   pathParts.pop()
 
@@ -164,7 +170,7 @@ const renderDirectory = async dir => {
     paths
   }
 
-  return render(details)
+  return prepareView(details)
 }
 
 const handler = async (req, res) => {

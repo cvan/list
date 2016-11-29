@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Files within {{ directory }}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ assetDir }}/styles.css">
+  </head>
+
+  <body>
+    <main id="main" class="main">
+      <h1 class="title">
+        <i>Index of&nbsp;</i>
+
+        {% for path in paths %}
+          <a href="/{{ path.url }}">{{ path.name }}</a>
+        {% endfor %}
+      </h1>
+
+      <ul class="files__list">
+        {% for file in files %}
+          <li class="files__item files__item--{{ file.ext }}">
+            <a href="/{{ file.relative }}" class="files__item__link file__link--{{ file.ext }}">{{ file.base }}</a>
+            <i class="file__link__size">{{ file.size }}</i>
+            <time class="file__link__time">{{ file.time }}</time>
+          </li>
+        {% endfor %}
+      </ul>
+    </main>
+
+    <aside id="aside" class="aside">
+      <p>Node {{ nodeVersion }} and <a href="https://github.com/zeit/list" target="_blank" rel="noopener noreferrer">list</a> running @ <a href="//localhost:{{ port }}">localhost:{{ port }}</a></p>
+    </aside>
+  </body>
+</html>
