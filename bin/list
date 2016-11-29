@@ -109,25 +109,27 @@ const renderDirectory = async dir => {
     if (await isDir(filePath)) {
       details.base += '/'
       details.date = {}
+      details.dir = true
     } else {
       details.ext = details.ext.split('.')[1] || 'txt'
+      details.dir = false
+    }
 
-      let fileStats
+    let fileStats
 
-      try {
-        fileStats = await fs.stat(filePath)
-      } catch (err) {
-        throw err
-      }
+    try {
+      fileStats = await fs.stat(filePath)
+    } catch (err) {
+      throw err
+    }
 
-      details.size = filesize(fileStats.size, {round: 0})
+    details.size = filesize(fileStats.size, {round: 0})
 
-      details.date = {
-        accessed: fileStats.atime,
-        modified: fileStats.mtime,
-        changed: fileStats.ctime,
-        created: fileStats.birthtime
-      }
+    details.date = {
+      accessed: fileStats.atime,
+      modified: fileStats.mtime,
+      changed: fileStats.ctime,
+      created: fileStats.birthtime
     }
 
     if (ignoredFiles.indexOf(details.base) > -1) {

@@ -62,45 +62,83 @@ h1 {
 /*li*/.files__item {
   background: red;
   display: flex;
+  flex-direction: row;
   font-size: 14px;
   // justify-content: space-between;
   list-style: none;
   padding: 10px;
-  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  // align-items: flex-start;
+}
+
+/*div*/.files__item__icon {
+  // flex: 0 0 auto;
+  // width: 100px;
 }
 
 /*a*/.files__item__link {
-  background: yellow;
+  // background: yellow;
+  // background: yellow;
   color: #1a00f2;
   display: block;
   // overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   // text-overflow: ellipsis;
   // white-space: nowrap;
-  flex: 1;
-
-  &:before {
-    content: '\f016';
-    font-family: FontAwesome;
-    display: inline-block;
-    margin-right: 10px;
-    color: #111;
-  }
 
   &:hover {
     color: #111;
   }
 }
 
-/*i*/.files__item__size {
-  color: #9b9b9b;
+/*span*/.files__item__link__name {
   display: block;
+  font-size: 1rem;
+
+  // &:before {
+  //   content: '\f016';
+  //   font-family: FontAwesome;
+  //   display: inline-block;
+  //   margin-right: 10px;
+  //   color: #111;
+  // }
+}
+
+/*span*/.files__item__link__name {
+  max-width: 150px;
+}
+
+/*i*/.files__item__size {
+  flex: 1 1 0;
+  // order: 1;
+  color: #9b9b9b;
   font-size: 11px;
   font-style: normal;
   overflow-x: hidden;
   padding-left: 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+}
+
+/*div*/.files__item__stats {
+  // flex: 0 0 auto;
+    border: 1px solid orange;
+    width: 100%;
+}
+
+.files__item__time {
+  background: red;
+  color: #555;
+  display: block;
+  font-size: .8rem;
+  font-family: system, Helvetica Neue, sans-serif;
+  font-weight: 300;
 }
 
 .icon {
@@ -149,7 +187,7 @@ h1 {
   // }
 
   /*li*/.files__item {
-    background: green;
+    background: #fff;
   }
 }
 
@@ -172,13 +210,12 @@ h1 {
   //   }
   // }
 
-  /*i*/.files__item__size {
-    font-size: 10px;
-    opacity: 0;
-    margin-left: 10px;
-    margin-top: 3px;
-    padding-left: 0;
-  }
+  // /*i*/.files__item__size {
+  //   font-size: 10px;
+  //   margin-left: 10px;
+  //   margin-top: 3px;
+  //   padding-left: 0;
+  // }
 
   /*aside*/.aside {
     padding-top: 50px;
