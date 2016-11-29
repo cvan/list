@@ -63,6 +63,7 @@
     "micro": "6.1.0",
     "micro-compress": "1.0.0",
     "mime-types": "^2.1.12",
-    "nunjucks": "3.0.0"
+    "nunjucks": "3.0.0",
+    "nunjucks-date-filter-local": "0.1.2"
   }
 }

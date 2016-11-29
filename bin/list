@@ -10,6 +10,7 @@ import micro, {send} from 'micro'
 import {red, green} from 'chalk'
 import args from 'args'
 import nunjucks from 'nunjucks'
+import nunjucksDateFilterLocal from 'nunjucks-date-filter-local'
 import {isBinarySync as isBinary} from 'istextorbinary'
 import filesize from 'filesize'
 import mime from 'mime-types'
@@ -25,6 +26,7 @@ args
 
 const flags = args.parse(process.argv)
 const directory = args.sub[0]
+const nunjucksPath = new nunjucks.FileSystemLoader(process.cwd())
 
 process.env.ASSET_DIR = '/' + Math.random().toString(36).substr(2, 10)
 
@@ -52,8 +54,11 @@ const isDir = async dir => {
 
 const prepareView = (context) => {
   return new Promise(function (resolve, reject) {
-    let viewContent
+    const nunjucksEnv = new nunjucks.Environment()
     const viewPath = path.normalize(path.join(__dirname, '/../../views/index.njk'))
+    let viewContent
+
+    nunjucksDateFilterLocal.install(nunjucksEnv)
 
     try {
       viewContent = fs.readFileSync(viewPath, 'utf8')
@@ -61,7 +66,7 @@ const prepareView = (context) => {
       throw err
     }
 
-    return nunjucks.renderString(viewContent, context, function (err, res) {
+    return nunjucksEnv.renderString(viewContent, context, function (err, res) {
       if (err) {
         reject(err);
         return;
@@ -103,6 +108,7 @@ const renderDirectory = async dir => {
 
     if (await isDir(filePath)) {
       details.base += '/'
+      details.date = {}
     } else {
       details.ext = details.ext.split('.')[1] || 'txt'
 
@@ -115,6 +121,13 @@ const renderDirectory = async dir => {
       }
 
       details.size = filesize(fileStats.size, {round: 0})
+
+      details.date = {
+        accessed: fileStats.atime,
+        modified: fileStats.mtime
+        changed: fileStats.ctime,
+        created: fileStats.birthtime
+      }
     }
 
     if (ignoredFiles.indexOf(details.base) > -1) {
