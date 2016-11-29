@@ -123,22 +123,36 @@ h1 {
   padding-left: 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
 
+/**/.files__item__stats {
+
+}
+
+/*span*/.files__item__time {
+  background: red;
+  color: #555;
+  flex: 0 0 auto;
+  font-size: .8rem;
+  font-family: system, Helvetica Neue, sans-serif;
+  font-weight: 300;
+  width: 100%;
 }
 
 /*div*/.files__item__stats {
   // flex: 0 0 auto;
-    border: 1px solid orange;
+    // border: 1px solid orange;
     width: 100%;
 }
 
-.files__item__time {
-  background: red;
-  color: #555;
+/*span*/.files__item__time--new,
+/*span*/.files__item__time--accessed {
+  display: none;
+}
+
+/*a*/.files__link:link ~ /*div*/.files__item__stats /*span*/.files__item__time--new,
+/*a*/.files__link:visited ~ /*div*/.files__item__stats /*span*/.files__item__time--accessed {
   display: block;
-  font-size: .8rem;
-  font-family: system, Helvetica Neue, sans-serif;
-  font-weight: 300;
 }
 
 .icon {

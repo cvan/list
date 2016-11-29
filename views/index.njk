@@ -1,3 +1,5 @@
+{%- set dateFmt = 'ddd, MMM D, YYYY - HH:mm:ss' -%}
+
 {%- macro iconSlugForFile (ext) -%}
 {{ ext }}
   {% if ext == "gif" or ext == "ico" or ext == "j2c" or ext == "j2k" or ext == "jfif" or ext == "jif" or ext == "jp2" or ext == "jpeg" or ext == "jpg" or ext == "jpx" or ext == "pcd" or ext == "png" or ext == "png" or ext == "psd" or ext == "sketch" or ext == "svg" or ext == "tif" or ext == "tiff" or ext == "tiff" -%}
@@ -78,16 +80,17 @@
             <i class="files__item__size">{{ file.size }}</i>
 
             <div class="files__item__stats">
+              <span class="files__item__time files__item__time--new">New</span>
               <span class="files__item__time files__item__time--accessed">Accessed</span>
 
               {# Time of when file was last accessed on the file system -#}
-              {#- <span class="files__item__time files__item__time--accessed">Accessed <time class="files__item__time" datetime="{{ file.date.accessed|date }}">{{ file.date.accessed }}</time></span> -#}
+              {#- <span class="files__item__time files__item__time--accessed">Accessed <time class="files__item__time" datetime="{{ file.date.accessed|date }}">{{ file.date.accessed|date(dateFmt) }}</time></span> -#}
 
-              <span class="files__item__time files__item__time--modified">Modified <time class="files__item__time" datetime="{{ file.date.modified|date }}">{{ file.date.modified }}</time></span>
+              <span class="files__item__time files__item__time--modified">Modified <time class="files__item__time" datetime="{{ file.date.modified|date }}">{{ file.date.modified|date(dateFmt) }}</time></span>
 
-              <span class="files__item__time files__item__time--Changed">Changed <time class="files__item__time" datetime="{{ file.date.changed|date }}">{{ file.date.changed }}</time></span>
+              <span class="files__item__time files__item__time--Changed">Changed <time class="files__item__time" datetime="{{ file.date.changed|date }}">{{ file.date.changed|date(dateFmt) }}</time></span>
 
-              <span class="files__item__time files__item__time--created">Created <time class="files__item__time" datetime="{{ file.date.created|date }}">{{ file.date.created }}</time></span>
+              <span class="files__item__time files__item__time--created">Created <time class="files__item__time" datetime="{{ file.date.created|date }}">{{ file.date.created|date(dateFmt) }}</time></span>
             </div>
           </li>
         {% endfor %}
